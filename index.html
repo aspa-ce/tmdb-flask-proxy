@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>🎬 Movie Explorer</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      padding: 20px;
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+    h2 {
+      margin-top: 40px;
+      color: #333;
+    }
+    .movie {
+      display: flex;
+      align-items: center;
+      margin-bottom: 20px;
+      background: white;
+      padding: 10px;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    .movie img {
+      width: 100px;
+      margin-right: 20px;
+      border-radius: 4px;
+    }
+    .movie-details {
+      flex: 1;
+    }
+    .movie-title {
+      font-size: 18px;
+      font-weight: bold;
+    }
+    .movie-year {
+      color: #777;
+      margin-top: 5px;
+    }
+    .movie-overview {
+      font-size: 14px;
+      margin-top: 8px;
+      color: #555;
+    }
+  </style>
+</head>
+<body>
+  <h1>🎬 Movie Explorer</h1>
+<form action="/search" method="get">
+    <input type="text" name="q" placeholder="Search movies">
+    <button type="submit">Search</button>
+</form>
+
+  {% for genre, movies in movies_by_genre.items() %}
+    <h2>{{ genre }} Movies</h2>
+    {% for movie in movies %}
+      <div class="movie">
+        <img src="{{ movie.poster_url or 'https://via.placeholder.com/100x150?text=No+Image' }}" alt="Poster">
+        <div class="movie-details">
+          <div class="movie-title">{{ movie.title }}</div>
+          <div class="movie-year">Year: {{ movie.release_date[:4] if movie.release_date else 'N/A' }}</div>
+          <div class="movie-overview">{{ movie.overview[:120] }}{% if movie.overview and movie.overview|length > 120 %}...{% endif %}</div>
+        </div>
+      </div>
+    {% endfor %}
+  {% endfor %}
+
+</body>
+</html>

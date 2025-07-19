@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Search Results</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      padding: 20px;
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+    .movie-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 20px;
+    }
+    .movie-card {
+      background: white;
+      padding: 10px;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+    .movie-card img {
+      width: 100%;
+      border-radius: 4px;
+    }
+    .movie-card h3 {
+      margin: 10px 0 5px;
+    }
+    .movie-card p {
+      color: #777;
+      margin: 0;
+    }
+    .back-link {
+      text-align: center;
+      margin-top: 30px;
+    }
+    .back-link a {
+      text-decoration: none;
+      color: #007BFF;
+      font-weight: bold;
+    }
+    .back-link a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Results for "{{ query }}"</h1>
+
+  {% if movies %}
+    <div class="movie-grid">
+      {% for movie in movies %}
+      <div class="movie-card">
+        <img src="{{ movie.poster_url or 'https://via.placeholder.com/300x450?text=Poster+Missing' }}"
+             alt="{{ movie.title }}">
+        <h3>{{ movie.title }}</h3>
+        <p>{{ movie.release_date[:4] if movie.release_date else 'N/A' }}</p>
+      </div>
+      {% endfor %}
+    </div>
+  {% else %}
+    <p style="text-align:center; font-size:18px;">No results found for "{{ query }}". Try a different title.</p>
+  {% endif %}
+
+  <div class="back-link">
+    <a href="/">← Back to Home</a>
+  </div>
+
+</body>
+</html>
